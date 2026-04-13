@@ -126,7 +126,7 @@ export default function ManajemenDokumen() {
                 </div>
                 <div><label className="label-field">Tahun</label><input type="text" value={form.tahun} onChange={(e) => setForm({ ...form, tahun: e.target.value })} className="input-field" /></div>
               </div>
-              <div><label className="label-field">File (PDF) {!editItem && <span className="text-red-500">*</span>}</label><input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files[0])} className="input-field" /></div>
+              <div><label className="label-field">File Dokumen {!editItem && <span className="text-red-500">*</span>}</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv" onChange={(e) => setFile(e.target.files[0])} className="input-field" /><p className="text-xs text-gray-400 mt-1">Format: PDF, Word, Excel, PowerPoint, TXT, CSV. Maks 20MB.</p></div>
               <div><label className="label-field">Deskripsi</label><textarea value={form.deskripsi} onChange={(e) => setForm({ ...form, deskripsi: e.target.value })} className="textarea-field" rows={3} /></div>
               <div className="flex gap-3 justify-end">
                 <button type="button" onClick={() => setShowModal(false)} className="btn-outline btn-sm">Batal</button>

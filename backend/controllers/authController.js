@@ -24,7 +24,7 @@ exports.login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
+      { id: user.id, username: user.username, role: user.role, anggota_id: user.anggota_id || null },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
@@ -36,7 +36,8 @@ exports.login = async (req, res) => {
         id: user.id,
         username: user.username,
         nama_lengkap: user.nama_lengkap,
-        role: user.role
+        role: user.role,
+        anggota_id: user.anggota_id || null
       }
     });
   } catch (error) {
@@ -48,7 +49,7 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const [users] = await pool.query(
-      'SELECT id, username, nama_lengkap, role, created_at FROM users WHERE id = ?',
+      'SELECT id, username, nama_lengkap, role, anggota_id, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
 

@@ -24,6 +24,9 @@ app.use('/api/anggota', require('./routes/anggota'));
 app.use('/api/dokumen', require('./routes/dokumen'));
 app.use('/api/aspirasi', require('./routes/aspirasi'));
 app.use('/api/profil', require('./routes/profil'));
+app.use('/api/wilayah', require('./routes/wilayah'));
+app.use('/api/dapil', require('./routes/dapil'));
+app.use('/api/agenda', require('./routes/agenda'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -36,8 +39,6 @@ app.use((err, req, res, next) => {
   }
   res.status(500).json({ message: 'Terjadi kesalahan internal server.' });
 });
-
-
 
 // Start server
 const startServer = async () => {

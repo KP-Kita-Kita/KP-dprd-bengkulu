@@ -26,3 +26,6 @@ Thumbs.db
 # Database & Utility Scripts
 backup_otomatis.sql
 backend/get_hash.js
+
+# Uploads
+backend/uploads/

@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
 
     try {
       const res = await API.get('/auth/me');
-      setUser(res.data.user);
+      setUser(res.data.user || res.data);
     } catch {
       localStorage.removeItem('dprd_token');
       localStorage.removeItem('dprd_user');

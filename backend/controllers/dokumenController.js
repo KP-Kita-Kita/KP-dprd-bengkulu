@@ -41,8 +41,7 @@ exports.getAll = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
-    const kategori_id = req.query.kategori_id;
-    const tahun = req.query.tahun;
+    const { kategori_id, tahun, search, sort } = req.query;
 
     let query = 'SELECT d.*, k.nama as kategori_nama, u.nama_lengkap as uploaded_by_nama FROM dokumen d LEFT JOIN kategori_dokumen k ON d.kategori_id = k.id LEFT JOIN users u ON d.uploaded_by = u.id';
     let countQuery = 'SELECT COUNT(*) as total FROM dokumen d';
@@ -60,6 +59,11 @@ exports.getAll = async (req, res) => {
       params.push(tahun);
       countParams.push(tahun);
     }
+    if (search) {
+      conditions.push('(d.judul LIKE ? OR d.deskripsi LIKE ?)');
+      params.push(`%${search}%`, `%${search}%`);
+      countParams.push(`%${search}%`, `%${search}%`);
+    }
 
     if (conditions.length > 0) {
       const whereClause = ' WHERE ' + conditions.join(' AND ');
@@ -67,15 +71,36 @@ exports.getAll = async (req, res) => {
       countQuery += whereClause;
     }
 
-    query += ' ORDER BY d.created_at DESC LIMIT ? OFFSET ?';
+    // Sorting
+    let orderClause = ' ORDER BY d.created_at DESC'; // default: terbaru
+    if (sort === 'oldest') orderClause = ' ORDER BY d.created_at ASC';
+    else if (sort === 'title') orderClause = ' ORDER BY d.judul ASC';
+    query += orderClause;
+
+    query += ' LIMIT ? OFFSET ?';
     params.push(limit, offset);
 
     const [rows] = await pool.query(query, params);
     const [countRows] = await pool.query(countQuery, countParams);
     const total = countRows[0].total;
 
+    // Tambahkan file_size dari filesystem jika tersedia
+    const enrichedRows = rows.map(row => {
+      let file_size = null;
+      if (row.file_path) {
+        try {
+          const fullPath = path.join(__dirname, '..', row.file_path);
+          if (fs.existsSync(fullPath)) {
+            const stats = fs.statSync(fullPath);
+            file_size = stats.size; // dalam bytes
+          }
+        } catch (e) { /* skip */ }
+      }
+      return { ...row, file_size };
+    });
+
     res.json({
-      data: rows,
+      data: enrichedRows,
       pagination: { page, limit, total, totalPages: Math.ceil(total / limit) }
     });
   } catch (error) {

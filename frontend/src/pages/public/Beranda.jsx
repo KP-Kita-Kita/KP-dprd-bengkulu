@@ -4,12 +4,27 @@ import API from '../../api/axios';
 import {
   FaLandmark, FaUsers, FaNewspaper, FaFileAlt, FaComments,
   FaArrowRight, FaCalendarAlt, FaChevronRight, FaGavel, FaHandshake,
-  FaBalanceScale, FaEye
+  FaBalanceScale, FaEye, FaClock, FaMapMarkerAlt, FaVideo
 } from 'react-icons/fa';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
+// Kategori agenda → label + warna
+const KATEGORI_STYLE = {
+  'Agenda':      { bg: 'bg-blue-100',   text: 'text-blue-800',   dot: 'bg-blue-500' },
+  'Masa Sidang': { bg: 'bg-purple-100', text: 'text-purple-800', dot: 'bg-purple-500' },
+  'Reses':       { bg: 'bg-amber-100',  text: 'text-amber-800',  dot: 'bg-amber-500' },
+};
+
+const STATUS_STYLE = {
+  Menunggu:    { bg: 'bg-yellow-50',  text: 'text-yellow-700',  border: 'border-yellow-200' },
+  Berlangsung: { bg: 'bg-green-50',   text: 'text-green-700',   border: 'border-green-200' },
+  Selesai:     { bg: 'bg-gray-50',    text: 'text-gray-500',    border: 'border-gray-200' },
+  Ditunda:     { bg: 'bg-red-50',     text: 'text-red-600',     border: 'border-red-200' },
+};
+
 export default function Beranda() {
   const [berita, setBerita] = useState([]);
+  const [agenda, setAgenda] = useState([]);
   const [stats, setStats] = useState({ anggota: 0, berita: 0, dokumen: 0, aspirasi: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -19,13 +34,15 @@ export default function Beranda() {
 
   const fetchData = async () => {
     try {
-      const [beritaRes, anggotaRes] = await Promise.all([
+      const [beritaRes, anggotaRes, agendaRes] = await Promise.all([
         API.get('/berita?limit=3'),
         API.get('/anggota'),
+        API.get('/agenda/public/terdekat'),
       ]);
       setBerita(beritaRes.data.data || beritaRes.data || []);
       const anggotaData = anggotaRes.data.data || anggotaRes.data || [];
       setStats(prev => ({ ...prev, anggota: anggotaData.length }));
+      setAgenda(agendaRes.data || []);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -214,6 +231,112 @@ export default function Beranda() {
           <div className="md:hidden text-center mt-8">
             <Link to="/berita" className="btn-primary gap-2">
               Lihat Semua Berita <FaArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== AGENDA TERDEKAT ===== */}
+      <section className="py-20 bg-gray-50">
+        <div className="content-container">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-secondary-500 font-semibold text-sm uppercase tracking-wider mb-3">Jadwal Kegiatan</p>
+              <h2 className="section-title">Agenda Terdekat</h2>
+            </div>
+            <Link to="/agenda" className="hidden md:flex items-center gap-2 text-primary-800 font-semibold hover:text-primary-600 transition-colors group">
+              <span>Lihat Kalender</span>
+              <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="space-y-4">
+              {[1,2,3].map(i => (
+                <div key={i} className="card p-5 animate-pulse flex gap-5">
+                  <div className="w-16 h-16 bg-gray-200 rounded-xl flex-shrink-0" />
+                  <div className="flex-1 space-y-3 py-1">
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-3 bg-gray-100 rounded w-1/2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : agenda.length > 0 ? (
+            <div className="space-y-4">
+              {agenda.map((item, idx) => {
+                const katStyle  = KATEGORI_STYLE[item.kategori]  || { bg: 'bg-gray-100',   text: 'text-gray-700',   dot: 'bg-gray-400' };
+                const statStyle = STATUS_STYLE[item.status]  || { bg: 'bg-gray-50',    text: 'text-gray-500',   border: 'border-gray-200' };
+                const tglMulai = new Date(item.waktu_mulai);
+                const isLive = item.status === 'Berlangsung';
+
+                return (
+                  <div
+                    key={item.id}
+                    className={`card p-5 flex flex-col sm:flex-row sm:items-center gap-5
+                      hover:border-primary-200 hover:-translate-y-0.5 hover:shadow-lg
+                      transition-all duration-300 animate-fade-in-up
+                      ${statStyle.bg} ${statStyle.border}`}
+                    style={{ animationDelay: `${idx * 0.08}s` }}
+                  >
+                    {/* Tanggal Box */}
+                    <div className="w-16 h-16 bg-white rounded-xl shadow-sm flex flex-col items-center justify-center flex-shrink-0 border border-gray-100">
+                      <span className="text-2xl font-black text-primary-800 leading-none">
+                        {tglMulai.getDate()}
+                      </span>
+                      <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                        {tglMulai.toLocaleDateString('id-ID', { month: 'short' })}
+                      </span>
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${katStyle.bg} ${katStyle.text}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${katStyle.dot}`} />
+                          {item.kategori}
+                        </span>
+                        {isLive && item.link_streaming && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500 text-white animate-pulse">
+                            <FaVideo className="text-[10px]" /> LIVE
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-primary-800 text-sm leading-snug line-clamp-1">{item.judul}</h3>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1.5 text-xs text-gray-400">
+                        <span className="flex items-center gap-1">
+                          <FaClock className="text-gray-300" />
+                          {tglMulai.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })} WIB
+                        </span>
+                        {item.lokasi && (
+                          <span className="flex items-center gap-1">
+                            <FaMapMarkerAlt className="text-gray-300" /> {item.lokasi}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Status Badge */}
+                    <span className={`text-xs font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 ${statStyle.text}`}>
+                      {item.status}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-14 text-gray-400">
+              <FaCalendarAlt className="text-4xl mx-auto mb-3 text-gray-300" />
+              <p className="font-medium">Tidak ada agenda dalam waktu dekat.</p>
+            </div>
+          )}
+
+          {/* Tombol Lihat Kalender Lengkap */}
+          <div className="text-center mt-10">
+            <Link to="/agenda" className="btn-primary gap-2 px-8 py-3.5">
+              <FaCalendarAlt />
+              <span>Lihat Kalender Lengkap</span>
+              <FaArrowRight className="text-sm" />
             </Link>
           </div>
         </div>

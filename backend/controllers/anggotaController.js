@@ -4,16 +4,16 @@ const path = require('path');
 
 exports.getAll = async (req, res) => {
   try {
-    const komisi = req.query.komisi;
+    const dapil = req.query.dapil;
     const fraksi = req.query.fraksi;
 
     let query = 'SELECT * FROM anggota';
     const params = [];
     const conditions = [];
 
-    if (komisi) {
-      conditions.push('komisi = ?');
-      params.push(komisi);
+    if (dapil) {
+      conditions.push('dapil = ?');
+      params.push(dapil);
     }
     if (fraksi) {
       conditions.push('fraksi = ?');
@@ -49,7 +49,7 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { nama, jabatan, komisi, daerah_pemilihan, fraksi, bio, periode } = req.body;
+    const { nama, jabatan, dapil, daerah_pemilihan, fraksi, bio, periode } = req.body;
 
     if (!nama) {
       return res.status(400).json({ message: 'Nama anggota wajib diisi.' });
@@ -58,8 +58,8 @@ exports.create = async (req, res) => {
     const foto = req.file ? `/uploads/anggota/${req.file.filename}` : null;
 
     const [result] = await pool.query(
-      'INSERT INTO anggota (nama, jabatan, komisi, daerah_pemilihan, fraksi, foto, bio, periode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [nama, jabatan, komisi, daerah_pemilihan, fraksi, foto, bio, periode || '2024-2029']
+      'INSERT INTO anggota (nama, jabatan, dapil, daerah_pemilihan, fraksi, foto, bio, periode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [nama, jabatan, dapil, daerah_pemilihan, fraksi, foto, bio, periode || '2024-2029']
     );
 
     res.status(201).json({
@@ -74,7 +74,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const { nama, jabatan, komisi, daerah_pemilihan, fraksi, bio, periode } = req.body;
+    const { nama, jabatan, dapil, daerah_pemilihan, fraksi, bio, periode } = req.body;
     const id = req.params.id;
 
     const [existing] = await pool.query('SELECT * FROM anggota WHERE id = ?', [id]);
@@ -92,11 +92,11 @@ exports.update = async (req, res) => {
     }
 
     await pool.query(
-      'UPDATE anggota SET nama = ?, jabatan = ?, komisi = ?, daerah_pemilihan = ?, fraksi = ?, foto = ?, bio = ?, periode = ? WHERE id = ?',
+      'UPDATE anggota SET nama = ?, jabatan = ?, dapil = ?, daerah_pemilihan = ?, fraksi = ?, foto = ?, bio = ?, periode = ? WHERE id = ?',
       [
         nama || existing[0].nama,
         jabatan || existing[0].jabatan,
-        komisi || existing[0].komisi,
+        dapil || existing[0].dapil,
         daerah_pemilihan || existing[0].daerah_pemilihan,
         fraksi || existing[0].fraksi,
         foto,

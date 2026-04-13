@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Ensure upload directories exist
-const dirs = ['uploads/berita', 'uploads/anggota', 'uploads/dokumen'];
+const dirs = ['uploads/berita', 'uploads/anggota', 'uploads/dokumen', 'uploads/aspirasi'];
 dirs.forEach(dir => {
   const fullPath = path.join(__dirname, '..', dir);
   if (!fs.existsSync(fullPath)) {
@@ -53,10 +53,21 @@ const docStorage = multer.diskStorage({
 });
 
 const docFilter = (req, file, cb) => {
-  if (file.mimetype === 'application/pdf') {
+  const allowedMimes = [
+    'application/pdf',
+    'application/msword',                                                    // .doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+    'application/vnd.ms-excel',                                              // .xls
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',      // .xlsx
+    'application/vnd.ms-powerpoint',                                         // .ppt
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+    'text/plain',                                                            // .txt
+    'text/csv',                                                              // .csv
+  ];
+  if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Hanya file PDF yang diizinkan.'));
+    cb(new Error('Format file tidak didukung. Format yang diizinkan: PDF, Word, Excel, PowerPoint, TXT, CSV.'));
   }
 };
 
@@ -66,4 +77,34 @@ const uploadDoc = multer({
   fileFilter: docFilter
 });
 
-module.exports = { uploadImage, uploadDoc };
+// Aspirasi upload config (gambar + PDF)
+const aspirasiStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '..', 'uploads', 'aspirasi'));
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueName + path.extname(file.originalname));
+  }
+});
+
+const aspirasiFilter = (req, file, cb) => {
+  const allowedTypes = /jpeg|jpg|png|gif|webp|pdf/;
+  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  const allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
+  const mimetype = allowedMimes.includes(file.mimetype);
+
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb(new Error('Hanya file gambar (JPEG, PNG, WebP) atau PDF yang diizinkan.'));
+  }
+};
+
+const uploadAspirasi = multer({
+  storage: aspirasiStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: aspirasiFilter
+});
+
+module.exports = { uploadImage, uploadDoc, uploadAspirasi };

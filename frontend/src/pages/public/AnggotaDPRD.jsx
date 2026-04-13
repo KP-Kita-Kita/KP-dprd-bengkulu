@@ -8,7 +8,7 @@ export default function AnggotaDPRD() {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [filterKomisi, setFilterKomisi] = useState('');
+  const [filterDapil, setFilterDapil] = useState('');
   const [filterFraksi, setFilterFraksi] = useState('');
 
   useEffect(() => {
@@ -23,14 +23,14 @@ export default function AnggotaDPRD() {
         a.jabatan.toLowerCase().includes(search.toLowerCase())
       );
     }
-    if (filterKomisi) {
-      result = result.filter(a => a.komisi === filterKomisi);
+    if (filterDapil) {
+      result = result.filter(a => a.dapil === filterDapil);
     }
     if (filterFraksi) {
       result = result.filter(a => a.fraksi === filterFraksi);
     }
     setFiltered(result);
-  }, [search, filterKomisi, filterFraksi, anggota]);
+  }, [search, filterDapil, filterFraksi, anggota]);
 
   const fetchAnggota = async () => {
     try {
@@ -45,7 +45,7 @@ export default function AnggotaDPRD() {
     }
   };
 
-  const komisiList = [...new Set(anggota.map(a => a.komisi).filter(Boolean))];
+  const dapilList = [...new Set(anggota.map(a => a.dapil).filter(Boolean))];
   const fraksiList = [...new Set(anggota.map(a => a.fraksi).filter(Boolean))];
 
   // Separate pimpinan and anggota
@@ -85,12 +85,12 @@ export default function AnggotaDPRD() {
               />
             </div>
             <select
-              value={filterKomisi}
-              onChange={(e) => setFilterKomisi(e.target.value)}
+              value={filterDapil}
+              onChange={(e) => setFilterDapil(e.target.value)}
               className="select-field md:w-48"
             >
-              <option value="">Semua Komisi</option>
-              {komisiList.map(k => (
+              <option value="">Semua Dapil</option>
+              {dapilList.map(k => (
                 <option key={k} value={k}>{k}</option>
               ))}
             </select>
@@ -187,10 +187,10 @@ function AnggotaCard({ data, isPimpinan = false }) {
               <span className="truncate">{data.fraksi}</span>
             </div>
           )}
-          {data.komisi && (
+          {data.dapil && (
             <div className="flex items-center gap-2">
               <FaFilter className="text-gray-400 flex-shrink-0" />
-              <span>{data.komisi}</span>
+              <span>{data.dapil}</span>
             </div>
           )}
           {data.daerah_pemilihan && (

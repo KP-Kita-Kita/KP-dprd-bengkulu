@@ -7,6 +7,7 @@ const navLinks = [
   { label: 'Profil', path: '/profil' },
   { label: 'Anggota DPRD', path: '/anggota' },
   { label: 'Berita', path: '/berita' },
+  { label: 'Agenda', path: '/agenda' },
   { label: 'Dokumen', path: '/dokumen' },
   { label: 'Aspirasi', path: '/aspirasi' },
   { label: 'Kontak', path: '/kontak' },

@@ -8,7 +8,7 @@ export default function ManajemenAnggota() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState(null);
-  const [form, setForm] = useState({ nama: '', jabatan: 'Anggota', komisi: '', daerah_pemilihan: '', fraksi: '', bio: '', periode: '2024-2029' });
+  const [form, setForm] = useState({ nama: '', jabatan: 'Anggota', dapil: '', daerah_pemilihan: '', fraksi: '', bio: '', periode: '2024-2029' });
   const [foto, setFoto] = useState(null);
   const [saving, setSaving] = useState(false);
 
@@ -24,13 +24,13 @@ export default function ManajemenAnggota() {
 
   const openCreate = () => {
     setEditItem(null);
-    setForm({ nama: '', jabatan: 'Anggota', komisi: '', daerah_pemilihan: '', fraksi: '', bio: '', periode: '2024-2029' });
+    setForm({ nama: '', jabatan: 'Anggota', dapil: '', daerah_pemilihan: '', fraksi: '', bio: '', periode: '2024-2029' });
     setFoto(null); setShowModal(true);
   };
 
   const openEdit = (item) => {
     setEditItem(item);
-    setForm({ nama: item.nama, jabatan: item.jabatan, komisi: item.komisi || '', daerah_pemilihan: item.daerah_pemilihan || '', fraksi: item.fraksi || '', bio: item.bio || '', periode: item.periode || '2024-2029' });
+    setForm({ nama: item.nama, jabatan: item.jabatan, dapil: item.dapil || '', daerah_pemilihan: item.daerah_pemilihan || '', fraksi: item.fraksi || '', bio: item.bio || '', periode: item.periode || '2024-2029' });
     setFoto(null); setShowModal(true);
   };
 
@@ -72,7 +72,7 @@ export default function ManajemenAnggota() {
                   <th className="text-left p-4 font-semibold text-gray-600">Nama</th>
                   <th className="text-left p-4 font-semibold text-gray-600">Jabatan</th>
                   <th className="text-left p-4 font-semibold text-gray-600">Fraksi</th>
-                  <th className="text-left p-4 font-semibold text-gray-600">Komisi</th>
+                  <th className="text-left p-4 font-semibold text-gray-600">Dapil</th>
                   <th className="text-center p-4 font-semibold text-gray-600">Aksi</th>
                 </tr>
               </thead>
@@ -89,7 +89,7 @@ export default function ManajemenAnggota() {
                     </td>
                     <td className="p-4 text-gray-600">{item.jabatan}</td>
                     <td className="p-4 text-gray-500 text-xs">{item.fraksi || '-'}</td>
-                    <td className="p-4 text-gray-500">{item.komisi || '-'}</td>
+                    <td className="p-4 text-gray-500">{item.dapil || '-'}</td>
                     <td className="p-4">
                       <div className="flex items-center justify-center gap-2">
                         <button onClick={() => openEdit(item)} className="p-2 rounded-lg text-blue-600 hover:bg-blue-50"><FaEdit /></button>
@@ -120,9 +120,9 @@ export default function ManajemenAnggota() {
                     <option>Ketua DPRD</option><option>Wakil Ketua I</option><option>Wakil Ketua II</option><option>Wakil Ketua III</option><option>Anggota</option>
                   </select>
                 </div>
-                <div><label className="label-field">Komisi</label>
-                  <select value={form.komisi} onChange={(e) => setForm({ ...form, komisi: e.target.value })} className="select-field">
-                    <option value="">-</option><option>Komisi I</option><option>Komisi II</option><option>Komisi III</option><option>Komisi IV</option>
+                <div><label className="label-field">Dapil</label>
+                  <select value={form.dapil} onChange={(e) => setForm({ ...form, dapil: e.target.value })} className="select-field">
+                    <option value="">-</option><option>Bengkulu 1</option><option>Bengkulu 2</option><option>Bengkulu 3</option><option>Bengkulu 4</option><option>Bengkulu 5</option><option>Bengkulu 6</option><option>Bengkulu 7</option>
                   </select>
                 </div>
               </div>
