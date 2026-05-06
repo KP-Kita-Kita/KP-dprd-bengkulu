@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FaLandmark, FaSignInAlt } from 'react-icons/fa';
 
 export default function DewanLogin() {
+  useEffect(() => {
+    document.title = "Dewan Panel Sistem Informasi DPRD Provinsi Bengkulu";
+  }, []);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

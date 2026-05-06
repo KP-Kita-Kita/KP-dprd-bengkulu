@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FaLandmark, FaUser, FaLock, FaSignInAlt } from 'react-icons/fa';
 
 export default function Login() {
+  useEffect(() => {
+    document.title = "Admin Panel Sistem Informasi DPRD Provinsi Bengkulu";
+  }, []);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

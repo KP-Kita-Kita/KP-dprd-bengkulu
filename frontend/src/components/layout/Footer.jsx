@@ -4,18 +4,18 @@ import { FaLandmark, FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaInstagra
 const quickLinks = [
   { label: 'Beranda', path: '/' },
   { label: 'Profil DPRD', path: '/profil' },
-  { label: 'Anggota DPRD', path: '/anggota' },
   { label: 'Berita & Kegiatan', path: '/berita' },
+  { label: 'Agenda', path: '/agenda' },
   { label: 'Dokumen Publik', path: '/dokumen' },
   { label: 'Aspirasi', path: '/aspirasi' },
   { label: 'Kontak', path: '/kontak' },
 ];
 
 const socialLinks = [
-  { icon: FaFacebook, href: 'https://www.facebook.com/share/1DPgFH7PM5/', label: 'Facebook' },
+  { icon: FaFacebook, href: 'https://www.facebook.com/share/1BPWSg7aA2/', label: 'Facebook' },
   { icon: FaInstagram, href:'https://www.instagram.com/sekretariatdprdprovinsibkl', label: 'Instagram' },
   { icon: FaTiktok, href: 'https://www.tiktok.com/@sekretariatdprdprovbkl', label: 'Tiktok' },
-  { icon: FaYoutube, href: 'https://www.youtube.com/c/DPRDProvinsiBengkulu', label: 'YouTube' },
+  { icon: FaYoutube, href: 'https://youtube.com/@sekretariatdprdprovinsiben-h4w?si=7spckc-JFe0UuGGf', label: 'YouTube' },
 ];
 
 export default function Footer() {
@@ -93,11 +93,11 @@ export default function Footer() {
               </li>
               <li className="flex gap-3 text-sm">
                 <FaPhone className="text-secondary-500 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-400">(0736) 21947</span>
+                <span className="text-gray-400">+62-813-6051-648</span>
               </li>
               <li className="flex gap-3 text-sm">
                 <FaEnvelope className="text-secondary-500 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-400">humas@setwanprovinsibengkulu.com</span>
+                <span className="text-gray-400">mediacenterdprd51@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -107,12 +107,8 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Jam Operasional</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex justify-between">
-                <span>Senin - Kamis</span>
-                <span className="text-white font-medium">08.00 - 16.00</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Jumat</span>
-                <span className="text-white font-medium">08.00 - 16.30</span>
+                <span>Senin - Jumat</span>
+                <span className="text-white font-medium">07.30 - 16.15</span>
               </li>
               <li className="flex justify-between">
                 <span>Sabtu - Minggu</span>
@@ -129,11 +125,6 @@ export default function Footer() {
           <p className="text-gray-500 text-xs text-center md:text-left">
             © {new Date().getFullYear()} DPRD Provinsi Bengkulu. Seluruh hak dilindungi.
           </p>
-          <div className="flex gap-6 text-xs text-gray-500">
-            <Link to="/admin/login" className="hover:text-secondary-400 transition-colors cursor-pointer">
-              Admin Panel
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
