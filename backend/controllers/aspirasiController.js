@@ -179,6 +179,31 @@ exports.updateStatus = async (req, res) => {
   }
 };
 
+// DELETE /api/aspirasi/:id — Delete aspirasi (admin)
+exports.remove = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const [existing] = await pool.query('SELECT lampiran FROM aspirasi WHERE id = ?', [id]);
+    if (existing.length === 0) {
+      return res.status(404).json({ message: 'Aspirasi tidak ditemukan.' });
+    }
+
+    // Delete lampiran file if exists
+    if (existing[0].lampiran) {
+      const filePath = path.join(__dirname, '..', existing[0].lampiran);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
+    await pool.query('DELETE FROM aspirasi WHERE id = ?', [id]);
+    res.json({ message: 'Aspirasi berhasil dihapus.' });
+  } catch (error) {
+    console.error('Delete aspirasi error:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan server.' });
+  }
+};
+
 // GET /api/aspirasi/stats — Statistik aspirasi
 exports.getStats = async (req, res) => {
   try {

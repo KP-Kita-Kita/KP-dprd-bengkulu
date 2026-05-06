@@ -5,7 +5,6 @@ import { FaBars, FaTimes, FaLandmark, FaChevronDown } from 'react-icons/fa';
 const navLinks = [
   { label: 'Beranda', path: '/' },
   { label: 'Profil', path: '/profil' },
-  { label: 'Anggota DPRD', path: '/anggota' },
   { label: 'Berita', path: '/berita' },
   { label: 'Agenda', path: '/agenda' },
   { label: 'Dokumen', path: '/dokumen' },

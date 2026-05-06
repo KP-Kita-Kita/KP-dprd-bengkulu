@@ -20,6 +20,7 @@ router.get('/stats', authMiddleware, roleAuth('admin'), aspirasiController.getSt
 router.get('/export', authMiddleware, roleAuth('admin'), aspirasiController.exportExcel);
 router.get('/', authMiddleware, aspirasiController.getAll);
 router.put('/:id/status', authMiddleware, roleAuth('admin'), aspirasiController.updateStatus);
+router.delete('/:id', authMiddleware, roleAuth('admin'), aspirasiController.remove);
 
 // Dewan routes
 router.get('/dewan', authMiddleware, roleAuth('dewan'), aspirasiController.getDewan);

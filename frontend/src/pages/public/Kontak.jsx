@@ -3,9 +3,9 @@ import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebook, FaInstagram, 
 export default function Kontak() {
   const contactInfo = [
     { icon: FaMapMarkerAlt, title: 'Alamat', content: 'Jl. Asahan No. 1, Padang Harapan, Gading Cempaka, Kota Bengkulu, Provinsi Bengkulu, 38221', color: 'bg-blue-50 text-blue-600' },
-    { icon: FaPhone, title: 'Telepon', content: '(0736) 21947', color: 'bg-green-50 text-green-600' },
-    { icon: FaEnvelope, title: 'Email', content: 'humas@setwanprovinsibengkulu.com', color: 'bg-amber-50 text-amber-600' },
-    { icon: FaClock, title: 'Jam Operasional', content: 'Senin - Jumat: 08.00 - 16.00 WIB', color: 'bg-purple-50 text-purple-600' },
+    { icon: FaPhone, title: 'Telepon', content: '+62-813-6051-648', color: 'bg-green-50 text-green-600' },
+    { icon: FaEnvelope, title: 'Email', content: 'mediacenterdprd51@gmail.com', color: 'bg-amber-50 text-amber-600' },
+    { icon: FaClock, title: 'Jam Operasional', content: 'Senin - Jumat: 07.30 - 16.15 WIB', color: 'bg-purple-50 text-purple-600' },
   ];
 
   return (
@@ -45,10 +45,10 @@ export default function Kontak() {
                 <h3 className="font-semibold text-primary-800 mb-4">Media Sosial</h3>
                 <div className="flex gap-3">
                   {[
-                    { Icon: FaFacebook, href: 'https://www.facebook.com/share/1DPgFH7PM5/', label: 'Facebook' },
+                    { Icon: FaFacebook, href: 'https://www.facebook.com/share/1BPWSg7aA2/', label: 'Facebook' },
                     { Icon: FaInstagram, href: 'https://www.instagram.com/sekretariatdprdprovinsibkl', label: 'Instagram' },
                     { Icon: FaTiktok, href: 'https://www.tiktok.com/@sekretariatdprdprovbkl', label: 'Tiktok' },
-                    { Icon: FaYoutube, href: 'https://www.youtube.com/c/DPRDProvinsiBengkulu', label: 'YouTube' }
+                    { Icon: FaYoutube, href: 'https://youtube.com/@sekretariatdprdprovinsiben-h4w?si=7spckc-JFe0UuGGf', label: 'YouTube' }
                   ].map(({ Icon, href, label }, idx) => (
                     <a key={idx} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 hover:bg-primary-800 hover:text-white transition-all duration-300">
                       <Icon />

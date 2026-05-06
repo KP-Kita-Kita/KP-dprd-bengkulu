@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ScrollToTop from './components/common/ScrollToTop';
@@ -12,7 +13,6 @@ import LoadingSpinner from './components/common/LoadingSpinner';
 // Public Pages
 import Beranda from './pages/public/Beranda';
 import Profil from './pages/public/Profil';
-import AnggotaDPRD from './pages/public/AnggotaDPRD';
 import Berita from './pages/public/Berita';
 import DetailBerita from './pages/public/DetailBerita';
 import Dokumen from './pages/public/Dokumen';
@@ -37,6 +37,10 @@ import DewanAspirasi from './pages/dewan/DewanAspirasi';
 
 // Public Layout wrapper
 const PublicLayout = () => {
+  useEffect(() => {
+    document.title = "Sistem Informasi DPRD Provinsi Bengkulu";
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -55,6 +59,10 @@ const ProtectedAdminRoute = () => {
   if (loading) return <div className="min-h-screen flex items-center justify-center"><LoadingSpinner /></div>;
   if (!user) return <Navigate to="/admin/login" replace />;
   if (user.role !== 'admin') return <Navigate to="/" replace />;
+
+  useEffect(() => {
+    document.title = "Admin Panel Sistem Informasi DPRD Provinsi Bengkulu";
+  }, []);
 
   return (
     <div className="flex bg-gray-50 min-h-screen">
@@ -76,6 +84,10 @@ const ProtectedDewanRoute = () => {
   if (!user) return <Navigate to="/dewan/login" replace />;
   if (user.role !== 'dewan') return <Navigate to="/" replace />;
 
+  useEffect(() => {
+    document.title = "Dewan Panel Sistem Informasi DPRD Provinsi Bengkulu";
+  }, []);
+
   return (
     <div className="flex bg-gray-50 min-h-screen">
       <DewanSidebar />
@@ -95,7 +107,7 @@ function AppRoutes() {
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Beranda />} />
         <Route path="/profil" element={<Profil />} />
-        <Route path="/anggota" element={<AnggotaDPRD />} />
+        <Route path="/anggota" element={<Navigate to="/profil" replace />} />
         <Route path="/berita" element={<Berita />} />
         <Route path="/berita/:id" element={<DetailBerita />} />
         <Route path="/dokumen" element={<Dokumen />} />

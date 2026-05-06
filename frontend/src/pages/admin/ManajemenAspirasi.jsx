@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import API from '../../api/axios';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { FaComments, FaCheck, FaTimes, FaEye, FaClock, FaFilter, FaSearch, FaFileExcel, FaMapMarkerAlt, FaPaperclip } from 'react-icons/fa';
+import { FaComments, FaCheck, FaTimes, FaEye, FaClock, FaFilter, FaSearch, FaFileExcel, FaMapMarkerAlt, FaPaperclip, FaTrash } from 'react-icons/fa';
 
 export default function ManajemenAspirasi() {
   const [aspirasi, setAspirasi] = useState([]);
@@ -55,6 +55,15 @@ export default function ManajemenAspirasi() {
       setDetail(null);
       setCatatan('');
     } catch (err) { alert('Gagal mengupdate status.'); }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus aspirasi ini? Tindakan ini tidak dapat dibatalkan.')) {
+      try {
+        await API.delete(`/aspirasi/${id}`);
+        fetchData();
+      } catch (err) { alert('Gagal menghapus aspirasi.'); }
+    }
   };
 
   const handleExport = async () => {
@@ -157,10 +166,16 @@ export default function ManajemenAspirasi() {
                     </div>
                   )}
                 </div>
-                <button onClick={() => { setDetail(item); setCatatan(item.catatan_admin || ''); }}
-                  className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Detail">
-                  <FaEye />
-                </button>
+                <div className="flex gap-2">
+                  <button onClick={() => { setDetail(item); setCatatan(item.catatan_admin || ''); }}
+                    className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Detail">
+                    <FaEye />
+                  </button>
+                  <button onClick={() => handleDelete(item.id)}
+                    className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors" title="Hapus">
+                    <FaTrash />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
