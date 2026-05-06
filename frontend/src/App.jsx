@@ -35,7 +35,6 @@ import DewanLogin from './pages/dewan/DewanLogin';
 import DewanDashboard from './pages/dewan/DewanDashboard';
 import DewanAspirasi from './pages/dewan/DewanAspirasi';
 
-// Public Layout wrapper
 const PublicLayout = () => {
   useEffect(() => {
     document.title = "Sistem Informasi DPRD Provinsi Bengkulu";

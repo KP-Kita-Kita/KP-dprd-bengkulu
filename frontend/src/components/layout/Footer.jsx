@@ -20,7 +20,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-navy text-white relative overflow-hidden">
+    <footer className="bg-navy text-white relative shrink-0 mt-auto">
       {/* Decorative top border */}
       <div className="h-1 bg-gold-gradient" />
 
