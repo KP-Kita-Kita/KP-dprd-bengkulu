@@ -26,7 +26,9 @@ Thumbs.db
 # Database & Utility Scripts
 backup_otomatis.sql
 db.sql
+database.txt
 backend/get_hash.js
+backend/create_dewan.js
 
 # Uploads
 backend/uploads/
