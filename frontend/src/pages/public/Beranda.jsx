@@ -58,8 +58,8 @@ export default function Beranda() {
 
   const quickLinks = [
     { icon: FaGavel, label: 'Legislasi', desc: 'Peraturan & Keputusan Daerah', path: '/dokumen', color: 'from-primary-800 to-primary-900' },
-    { icon: FaUsers, label: 'Anggota DPRD', desc: 'Profil Anggota Dewan', path: '/profil?tab=anggota', color: 'from-secondary-400 to-secondary-600' },
-    { icon: FaComments, label: 'Aspirasi', desc: 'Sampaikan Aspirasi Anda', path: '/aspirasi', color: 'from-secondary-400 to-secondary-600' },
+    { icon: FaUsers, label: 'Anggota DPRD', desc: 'Profil Anggota Dewan', path: '/profil?tab=anggota', color: 'from-primary-800 to-primary-900' },
+    { icon: FaComments, label: 'Aspirasi', desc: 'Sampaikan Aspirasi Anda', path: '/aspirasi', color: 'from-primary-800 to-primary-900' },
     { icon: FaBalanceScale, label: 'Transparansi', desc: 'Dokumen Publik', path: '/dokumen', color: 'from-primary-800 to-primary-900' },
   ];
 
