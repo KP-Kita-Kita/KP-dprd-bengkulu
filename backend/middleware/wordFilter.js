@@ -1,9 +1,35 @@
 const BANNED_WORDS = [
-  'anjing', 'babi', 'bangsat', 'bajingan', 'brengsek', 'keparat',
-  'tolol', 'bodoh', 'goblok', 'idiot', 'dungu',
-  'sialan', 'bedebah', 'kampret', 'monyet', 'setan',
-  'bego', 'perek', 'lonte', 'sundal', 'lacur',
-  'tai', 'kontol', 'memek', 'ngentot', 'jancok'
+  // Hewan/Kasar (Standard)
+  'anjing', 'anjingg', 'anjg', 'anjrit', 'anjrot', 'anjir', 'anjer', 'asu',
+  'babi', 'babii', 'monyet', 'kampret', 'kunyuk', 'celeng',
+
+  // Hinaan/Kasar
+  'bangsat', 'bangsatt', 'bajingan', 'bajinggan', 'brengsek', 'brengsekk',
+  'keparat', 'sialan', 'bedebah', 'goblok', 'goblokk', 'goblog', 'tolol',
+  'tololl', 'bodoh', 'bego', 'begoo', 'dungu', 'idiot', 'geblek', 'sinting',
+  'sarap', 'gila', 'gembel',
+
+  // Seksual/Organ/Kotor
+  'kontol', 'kontoll', 'kntl', 'memek', 'mmk', 'tempik', 'puki', 'pukimak',
+  'kimak', 'pantek', 'peler', 'zakar', 'penis', 'vagina', 'jembut', 'peju',
+  'tetek', 'toket', 'nenen', 'pantat', 'ngentot', 'ngentodt', 'ngewe', 'ewe',
+  'coly', 'coli', 'colmek', 'colay', 'masturbasi', 'cabul', 'mesum', 'porno',
+  'bokep', 'hentai', 'seks', 'sex', 'sodomi', 'perkosa', 'pemerkosaan', 'zina',
+
+  // Pekerjaan/Karakter Negatif
+  'lonte', 'lonthe', 'perek', 'sundal', 'lacur', 'pelacur', 'pecun', 'jablay',
+  'germo', 'mucikari', 'pelakor', 'pebinor', 'banci', 'bencong', 'homo',
+  'lesbi', 'maho',
+
+  // Bahasa Daerah (Jawa/Sunda/dll)
+  'jancok', 'jancuk', 'dancok', 'dancuk', 'cuk', 'coeg', 'ndasmu', 'raimu',
+  'matamu', 'cangkemu', 'cocote', 'gatelan',
+
+  // Agama/Mistik Negatif
+  'setan', 'iblis', 'dajjal',
+
+  // Bahasa Inggris & Lainnya
+  'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'tai', 'taii'
 ];
 
 /**
